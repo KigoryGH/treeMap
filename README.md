@@ -3,7 +3,7 @@ a treeMap style way to check your storage state using chalk to render color bloc
 
 
 # Table of contents
-- [Why use treeMap][#Why-use-treeMap]
+- [Why use treeMap](#Why-use-treeMap)
 
 
 
