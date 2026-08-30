@@ -50,6 +50,19 @@ console.log(layout);
 
 for (let i = 0; i < container.y1; i++) {
     grid.push([]);
-    console.log(grid)
 }
 
+for (const rect of layout) {
+    const startRow = Math.floor(rect.y0);
+    const endRow = Math.floor(rect.y1);
+    const startCol = Math.floor(rect.x0);
+    const endCol = Math.floor(rect.x1);
+
+    for (let row = startRow; row < endRow; row++) {
+        for (let col = startCol; col < endCol; col++) {
+            grid[row][col] = rect.name;
+        }
+    }
+}
+
+console.log(grid);
