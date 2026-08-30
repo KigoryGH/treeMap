@@ -35,6 +35,7 @@ function getSize(path) {
 }
 
 const info = [];
+const grid = [];
 
 for (const fName of entries) {
     console.log(fName, formatSize(getSize(fName)));
@@ -46,3 +47,9 @@ console.log(info);
 const container = { x0: 0, y0: 0, x1: 40, y1: 15 };
 const layout = squarify(info, container);
 console.log(layout);
+
+for (let i = 0; i < container.y1; i++) {
+    grid.push([]);
+    console.log(grid)
+}
+
