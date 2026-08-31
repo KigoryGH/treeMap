@@ -85,7 +85,7 @@ for (const rect of layout) {
    }
 }
 
-let unknown = false;
+let unknown = [];
 
 for (let row = 0; row < 15; row++) {
    for (let column = 0; column < 40; column++) {
@@ -95,12 +95,15 @@ for (let row = 0; row < 15; row++) {
          process.stdout.write(chalk[colors[match.type]](" "));
       } else {
          process.stdout.write(chalk.bgWhite(" "));
-         unknown = true;
+        unknown.push(fileName)
       }
    }
    console.log();
 }
 
-if (unknown === true) {
+console.log(unknown)
+
+if (unknown.length > 0) {
    console.log(chalk.redBright.bold("White blocks mean unknown file type — please open a GitHub issue so we can add support for it. Thanks"))
+   console.log(chalk.bold("Unspported file name: ", chalk.yellowBright.bold(`${unknown}`)))
 }
