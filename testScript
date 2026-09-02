@@ -5,7 +5,7 @@ import squarifyModule from "squarify";
 const squarify = squarifyModule.default;
 
 const entries = fs.readdirSync(".");
-const colors = {  // file types colors
+const colors = {
   file: "bgBlue",
   executable: "bgGreen",
   directory: "bgMagenta",
@@ -44,8 +44,6 @@ const info = [];
 const grid = [];
 
 for (const fName of entries) {
-  // lstat, not stat — stat follows symlinks to their target,
-  // lstat reports the symlink itself. need this or symlinks never get detected.
   const stats = fs.lstatSync(fName);
 
   let type;
@@ -54,9 +52,6 @@ for (const fName of entries) {
   } else if (stats.isSymbolicLink()) {
     type = "symlink";
   } else if ((stats.mode & 0o100) !== 0) {
-    // stats.mode packs all permission bits into one number.
-    // 0o100 is the owner-execute bit specifically — & masks out
-    // everything else so we're only checking that one bit.
     type = "executable";
   } else {
     type = "file";
@@ -69,7 +64,7 @@ for (const fName of entries) {
   });
 }
 
-const container = { // container size: 15 rows 40 columns
+const container = {
   x0: 0,
   y0: 0,
   x1: 40,
@@ -83,10 +78,6 @@ for (let i = 0; i < container.y1; i++) {
 
 for (const rect of layout) {
   const startRow = Math.floor(rect.y0);
-  // ceil (not floor) on the end so adjacent rectangles' rounding
-  // overlaps slightly instead of leaving unclaimed gap cells.
-  // min() clamps it so ceil can't push past the actual grid edge
-  // (was crashing on out-of-bounds before this clamp existed).
   const endRow = Math.min(Math.ceil(rect.y1), container.y1);
   const startCol = Math.floor(rect.x0);
   const endCol = Math.min(Math.ceil(rect.x1), container.x1);
@@ -107,7 +98,6 @@ for (let row = 0; row < 15; row++) {
     if (match) {
       process.stdout.write(chalk[colors[match.type]](" "));
     } else {
-      // fallback for any cell that still has no match (rounding gap)
       process.stdout.write(chalk.bgWhite(" "));
       unknown.push(fileName);
     }
